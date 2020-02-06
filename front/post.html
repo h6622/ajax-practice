@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Post</title>
+</head>
+<body>
+    <!-- 폼 태그와 비슷한 기능을 수행한다. form 방식은 url이 바뀜 ajax는 새로고침 없이 비동기 처리 -->
+    <!-- <form action="http://localhost:8001/login" method="post"></form> -->
+
+    <input type="text" name="" id="email">
+
+    <button id='ajax'>버튼</button>
+    <h1 id="result"></h1>
+    <script>
+        document.querySelector('#ajax').addEventListener('click', function() {
+            let data = {'email' : document.querySelector('#email').value};
+            data = JSON.stringify(data);
+
+            const xhr = new XMLHttpRequest()
+            xhr.open('POST', 'http://localhost:8001/ajax')
+            xhr.setRequestHeader('Content-type', 'application/json')
+            xhr.onreadystatechange = function() {                
+                console.log(JSON.parse(xhr.responseText))
+                document.querySelector('#result').innerHTML = JSON.parse(xhr.responseText).info
+            }
+            xhr.send(data);
+        })
+    </script>
+</body>
+</html>

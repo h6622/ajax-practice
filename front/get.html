@@ -7,18 +7,19 @@
     <title>Get</title>
 </head>
 <body>
-    <input type="button" value="헬로우" />    
+    <p>Time : <span id="time"></span></p>
+    <input type="button" value="버튼" />    
     
     <!-- 화살표 함수 -->
     <!-- <button onclick='onClick()'>버튼</button> -->
 
     <script>
         document.querySelector('input').addEventListener('click', function(e) {
-            var xhr = new XMLHttpRequest()
-            xhr.open('GET', 'http://localhost:8001/hello')            
+            const xhr = new XMLHttpRequest()
+            xhr.open('GET', 'http://localhost:8001/time')            
             xhr.onreadystatechange = function() {
-                if(xhr.readyState === 4 && xhr.status === 2){
-                    document.querySelector('#time').innerHTML = xhr.responseText
+                if(xhr.readyState === 4 && xhr.status === 200){
+                    document.querySelector('#time').innerHTML = xhr.response
                 }
             }
             xhr.send();
