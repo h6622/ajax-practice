@@ -4,7 +4,21 @@ const multer = require('multer')
 
 const app = express()
 const port = 8001
-const upload = multer()
+
+// Form Data 확인용
+// const upload = multer()
+
+// Multer 확인용
+// const upload = multer({ dest: 'uploads/'})
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+})
+const upload = multer({ storage: storage })
 
 app.use(cors())
 app.use(express.json())
@@ -43,7 +57,13 @@ app.post('/ajax', (req, res) => {
 app.post('/form', upload.none(), (req, res) => {
     console.log(req.body)
     res.send('정상적으로 데이터를 전송 받았습니다.')
-    
 })
+
+app.post('/upload', upload.single('userfile'), (req, res) => {
+    res.send('정상적으로 업로드가 완료 되었습니다. 파일명 : ' + req.file.originalname)
+    console.log(req.file)
+})
+
+app.use('/users', express.static('uploads'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
