@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormData</title>
+</head>
+<body>
+    <h1>FormData</h1>
+    <script>
+        const xhr = new XMLHttpRequest
+        var formData = new FormData()
+        formData.append('name', 'h662')
+        formData.append('birth', '2000')        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === xhr.DONE) {
+                if(xhr.status === 200 || xhr.status === 201) {
+                    console.log(xhr.responseText)
+                } else {
+                    console.error(xhr.responseText)
+                }
+            }
+        }
+        xhr.open('POST', 'http://localhost:8001/form')
+        xhr.send(formData)
+    </script>
+</body>
+</html>
